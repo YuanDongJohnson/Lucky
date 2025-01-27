@@ -1,0 +1,21 @@
+<svg width="300" height="400" viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  {/* 竹筒主体轮廓 - 使用半透明黑色 */}
+  <path d="M90 50 L90 350 Q90 380 120 380 L180 380 Q210 380 210 350 L210 50" 
+    stroke="#000" strokeWidth="2" fill="none"/>
+  
+  {/* 竹节 */}
+  <line x1="90" y1="100" x2="210" y2="100" stroke="#000" strokeWidth="2"/>
+  <line x1="90" y1="150" x2="210" y2="150" stroke="#000" strokeWidth="2"/>
+  <line x1="90" y1="200" x2="210" y2="200" stroke="#000" strokeWidth="2"/>
+  <line x1="90" y1="250" x2="210" y2="250" stroke="#000" strokeWidth="2"/>
+  <line x1="90" y1="300" x2="210" y2="300" stroke="#000" strokeWidth="2"/>
+  
+  {/* 龙纹图案 */}
+  <path d="M120 160 C140 140, 160 140, 180 160 S200 180, 180 200 S140 220, 120 200 S100 180, 120 160" 
+    stroke="#000" strokeWidth="2" fill="none"/>
+  <path d="M150 140 Q160 130, 170 140" stroke="#000" strokeWidth="2" fill="none"/>
+  <path d="M130 220 Q150 230, 170 220" stroke="#000" strokeWidth="2" fill="none"/>
+  <circle cx="145" cy="180" r="2" fill="#000"/>
+  <circle cx="155" cy="180" r="2" fill="#000"/>
+</svg>
+
