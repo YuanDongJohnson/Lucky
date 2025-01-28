@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { format } from "date-fns"
 
@@ -20,6 +20,8 @@ export default function Home() {
   const [word, setWord] = useState("")
   const [isDrawing, setIsDrawing] = useState(false)
   const [canDraw, setCanDraw] = useState(true)
+  const vibrationIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     const lastDrawDate = localStorage.getItem("lastDrawDate")
@@ -33,13 +35,54 @@ export default function Home() {
         setWord(savedWord)
       }
     }
+
+    audioRef.current = new Audio("/shake.mp3")
+
+    return () => {
+      if (vibrationIntervalRef.current) {
+        clearInterval(vibrationIntervalRef.current)
+      }
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
+    }
   }, [])
+
+  const startVibrationAndSound = () => {
+    if ("vibrate" in navigator) {
+      vibrationIntervalRef.current = setInterval(() => {
+        navigator.vibrate(200)
+      }, 300)
+    }
+    if (audioRef.current) {
+      audioRef.current.loop = true
+      audioRef.current.play().catch((e) => console.log("Audio play failed:", e))
+    }
+  }
+
+  const stopVibrationAndSound = () => {
+    if (vibrationIntervalRef.current) {
+      clearInterval(vibrationIntervalRef.current)
+    }
+    if ("vibrate" in navigator) {
+      navigator.vibrate(0)
+    }
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+    }
+  }
 
   const drawFortune = () => {
     if (!canDraw) return
 
     setIsDrawing(true)
+    startVibrationAndSound()
+
     setTimeout(() => {
+      stopVibrationAndSound()
+
       const index = Math.floor(Math.random() * fortunes.length)
       const randomFortune = fortunes[index]
       const randomWord = words[index]
